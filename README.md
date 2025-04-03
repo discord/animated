@@ -1,9 +1,12 @@
+> **Discord-specific**: Need to manually run the build and include the built files (ie. /lib) into the repo since we don't support Flow.
+>
+> Run: `npm install` (or `npm run build`)
+
 # Animated
 
 Declarative Animations Library for React and React Native
 
 See the [interactive docs](http://animatedjs.github.io/interactive-docs/).
-
 
 ## Goal
 
@@ -14,7 +17,6 @@ a web context. At some point, React Native will itself depend on this library.
 Additionally, it would be ideal if this library would be compatible with future
 potential "targets" of React where animation makes sense.
 
-
 ## Usage (Still Theoretical)
 
 Right now the main export of this library is essentially just what is in the
@@ -23,10 +25,9 @@ namespace. Additionally, it includes an `inject` namespace (explained below).
 
 Ideally, I'd like to make it so that `View`, `Image`, and `Text` are exported,
 and just do the "right thing" depending on whether or not they are being used
-in the context of React Native or React Web.  I'm not quite sure how we can do
+in the context of React Native or React Web. I'm not quite sure how we can do
 this yet without declaring dependencies on react native. Perhaps the platform
 specific file extensions can be used for this?
-
 
 ### Injectables
 
@@ -52,14 +53,13 @@ Each of these modules can be injected by passing in the implementation. For
 example, a naive `FlattenStyle` could be passed in as:
 
 ```js
-Animated.inject.FlattenStyle(
-  styles => Array.isArray(styles)
-    ? Object.assign.apply(null, styles)
-    : styles
+Animated.inject.FlattenStyle((styles) =>
+  Array.isArray(styles) ? Object.assign.apply(null, styles) : styles
 );
 ```
 
 ## Sample Code
+
 Below are simple examples for using animated in React.
 
 ```js
@@ -70,9 +70,9 @@ import Animated from "animated/lib/targets/react-dom";
 class App extends React.Component {
   state = { anim: new Animated.Value(0) };
   click = () => {
-    Animated.timing(this.state.anim, { 
-      toValue: 100, 
-      duration: 500 
+    Animated.timing(this.state.anim, {
+      toValue: 100,
+      duration: 500,
     }).start();
   };
 
@@ -91,8 +91,8 @@ class App extends React.Component {
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
-
 ```
+
 The above code will move the `div` element with the class of `box` by `100px` when clicked.
 
 ```js
@@ -123,6 +123,6 @@ class App extends React.Component {
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
-
 ```
+
 The above code will scale the `div` element with the class of `box` by in and then out when pressed.
